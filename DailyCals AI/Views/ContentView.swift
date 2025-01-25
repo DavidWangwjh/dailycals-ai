@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct ContentView: View {
+    @Environment(ModelData.self) var modelData
+    
     var body: some View {
         VStack {
-            Text("DailyCals AI")
+            Text(modelData.food.title)
         }
         .padding()
     }
@@ -18,4 +20,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
+        .environment(ModelData())
 }

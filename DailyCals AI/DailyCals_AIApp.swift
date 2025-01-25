@@ -9,9 +9,13 @@ import SwiftUI
 
 @main
 struct DailyCals_AIApp: App {
+    
+    @State private var modelData = ModelData()
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environment(modelData)
         }
     }
 }

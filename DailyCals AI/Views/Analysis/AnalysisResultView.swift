@@ -7,13 +7,10 @@
 
 import SwiftUI
 
+
 struct AnalysisResultView: View {
     let result: Food
     
-    private func formattedNumber(_ number: Double) -> String {
-        return String(format: "%.2f", number)
-    }
-
     var body: some View {
         VStack(spacing: 10) {
             Text("\(result.title)")
@@ -28,7 +25,7 @@ struct AnalysisResultView: View {
                     
                     Spacer()
                     
-                    Text("\(formattedNumber(ingredient.totalCalories)) calories")
+                    Text("\(numberFormatter(ingredient.totalCalories, decimal: 2)) calories")
                 }
             }
             HStack {
@@ -37,7 +34,7 @@ struct AnalysisResultView: View {
                 
                 Spacer()
                 
-                Text("\(formattedNumber(result.totalCalories)) calories")
+                Text("\(numberFormatter(result.totalCalories, decimal: 2)) calories")
                     .fontWeight(.bold)
             }
         }

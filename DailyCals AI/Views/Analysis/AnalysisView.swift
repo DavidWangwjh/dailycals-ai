@@ -29,7 +29,7 @@ struct AnalysisView: View {
                     isAnalysisSheetShowing = false
                 }
             }
-            .padding(.horizontal)
+            .padding()
             
             Image(uiImage: image)
                 .resizable()

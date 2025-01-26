@@ -27,7 +27,7 @@ struct ContentView: View {
 
             ImageSourceSelector(selectedImage: $selectedImage)
         }
-        .padding()
+        .padding(.vertical)
         .onChange(of: selectedImage) {
             isAnalysisSheetShowing = selectedImage != nil
         }

@@ -11,29 +11,11 @@ struct ImageView: View {
     var image: UIImage
     
     var body: some View {
-        
-        VStack {
-            HStack {
-                Button("Cancel"){
-                    
-                }
-                
-                Spacer()
-                
-                Button("Done"){
-                    
-                }
-            }
+        Image(uiImage: image)
+            .resizable()
+            .scaledToFit()
+            .frame(maxWidth: 400, maxHeight: 200)
             .padding()
-            
-            Image(uiImage: image)
-                .resizable()
-                .scaledToFit()
-                .frame(maxWidth: 400, maxHeight: 200)
-                .padding()
-            
-            Spacer()
-        }
     }
 }
 

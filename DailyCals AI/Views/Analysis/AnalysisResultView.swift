@@ -1,0 +1,50 @@
+//
+//  AnalysisResultView.swift
+//  DailyCals AI
+//
+//  Created by David Wang on 1/25/25.
+//
+
+import SwiftUI
+
+struct AnalysisResultView: View {
+    let result: Food
+    
+    private func formattedNumber(_ number: Double) -> String {
+        return String(format: "%.2f", number)
+    }
+
+    var body: some View {
+        VStack(spacing: 10) {
+            Text("\(result.title)")
+                .font(.title)
+                .fontWeight(.bold)
+            Text("\(result.imageDescription)")
+            Text("Ingredients")
+                .font(.title2)
+            ForEach(result.ingredients, id: \.title) { ingredient in
+                HStack {
+                    Text("\(ingredient.title)")
+                    
+                    Spacer()
+                    
+                    Text("\(formattedNumber(ingredient.totalCalories)) calories")
+                }
+            }
+            HStack {
+                Text("Total")
+                    .fontWeight(.bold)
+                
+                Spacer()
+                
+                Text("\(formattedNumber(result.totalCalories)) calories")
+                    .fontWeight(.bold)
+            }
+        }
+        .padding()
+    }
+}
+
+#Preview {
+    AnalysisResultView(result: ModelData().food)
+}

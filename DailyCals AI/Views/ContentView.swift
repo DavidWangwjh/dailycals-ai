@@ -11,10 +11,7 @@ struct ContentView: View {
     @Environment(ModelData.self) var modelData
     
     @State var selectedImage: UIImage?
-    
-    private var isAnalysisSheetShowing: Bool {
-        selectedImage != nil
-    }
+    @State var isAnalysisSheetShowing: Bool = false
     
     var body: some View {
         VStack {
@@ -31,8 +28,11 @@ struct ContentView: View {
             ImageSourceSelector(selectedImage: $selectedImage)
         }
         .padding()
+        .onChange(of: selectedImage) {
+            isAnalysisSheetShowing = selectedImage != nil
+        }
         .fullScreenCover(isPresented: .constant(isAnalysisSheetShowing)) {
-            ImageView(image: selectedImage!)
+            AnalysisView(image: selectedImage!, isAnalysisSheetShowing: $isAnalysisSheetShowing)
         }
     }
 }

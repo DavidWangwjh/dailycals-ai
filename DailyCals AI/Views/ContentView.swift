@@ -10,11 +10,30 @@ import SwiftUI
 struct ContentView: View {
     @Environment(ModelData.self) var modelData
     
+    @State var selectedImage: UIImage?
+    
+    private var isAnalysisSheetShowing: Bool {
+        selectedImage != nil
+    }
+    
     var body: some View {
         VStack {
-            Text(modelData.food.title)
+            Text("DailyCals AI")
+                .font(.title)
+                .fontWeight(.bold)
+            
+            Spacer()
+            
+            CalendarView()
+            
+            Spacer()
+
+            ImageSourceSelector(selectedImage: $selectedImage)
         }
         .padding()
+        .fullScreenCover(isPresented: .constant(isAnalysisSheetShowing)) {
+            ImageView(image: selectedImage!)
+        }
     }
 }
 

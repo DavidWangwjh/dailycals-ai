@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct Ingredient: Codable {
     var title: String
@@ -19,4 +20,13 @@ struct Food: Codable {
     var imageDescription: String
     var ingredients: [Ingredient]
     var totalCalories: Double
+    
+    var imageName: String
+    var image: Image {
+        if let uiImage = UIImage(named: imageName) {
+            return Image(uiImage: uiImage)
+        } else {
+            return Image(systemName: "photo") // Fallback to a default system image
+        }
+    }
 }

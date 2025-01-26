@@ -25,7 +25,8 @@ class ModelData {
                 Ingredient(title: "Pickles",         caloriesPerGram: 0.5,  totalGram: 20,  totalCalories: 10),
                 Ingredient(title: "Onion",           caloriesPerGram: 0.4,  totalGram: 15,  totalCalories: 6)
             ],
-            totalCalories: 558
+            totalCalories: 558,
+            imageName: "cheeseburger"
         )
     }
 }

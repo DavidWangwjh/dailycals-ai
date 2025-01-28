@@ -10,8 +10,19 @@ import SwiftUI
 struct ContentView: View {
     @Environment(ModelData.self) var modelData
     
+    @State var selectedDate = Date.now
     @State var selectedImage: UIImage?
     @State var isAnalysisSheetShowing: Bool = false
+    
+    let foodByDate: [Date: [Food]] = Dictionary(grouping: ModelData().foods) { food in
+        // Use only the date components for grouping
+        Calendar.current.startOfDay(for: food.createdAt)
+    }
+    
+    let foodCountByDate: [Date: Int] = Dictionary(grouping: ModelData().foods) { food in
+        // Group foods by the start of the day
+        Calendar.current.startOfDay(for: food.createdAt)
+    }.mapValues { $0.count }
     
     var body: some View {
         VStack {
@@ -21,7 +32,10 @@ struct ContentView: View {
             
             Spacer()
             
-            CalendarView()
+            CalendarView(selectedDate: $selectedDate, foodCountByDate: foodCountByDate)
+                .padding(.bottom, -40)
+            
+            FoodListView(foodItems: foodByDate[selectedDate] ?? [])
             
             Spacer()
 
@@ -32,7 +46,7 @@ struct ContentView: View {
             isAnalysisSheetShowing = selectedImage != nil
         }
         .fullScreenCover(isPresented: .constant(isAnalysisSheetShowing)) {
-            AnalysisView(image: selectedImage!, isAnalysisSheetShowing: $isAnalysisSheetShowing)
+            AnalysisView(date: selectedDate, image: selectedImage!, isAnalysisSheetShowing: $isAnalysisSheetShowing)
         }
     }
 }

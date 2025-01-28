@@ -15,7 +15,8 @@ struct Ingredient: Codable {
     var totalCalories: Double
 }
 
-struct Food: Codable {
+struct Food: Codable, Identifiable {
+    var id: Int
     var title: String
     var imageDescription: String
     var ingredients: [Ingredient]
@@ -29,4 +30,6 @@ struct Food: Codable {
             return Image(systemName: "photo") // Fallback to a default system image
         }
     }
+    
+    var createdAt: Date
 }

@@ -8,8 +8,6 @@
 import Foundation
 import UIKit
 
-let API_KEY: String = ""
-
 struct TopLevelResponse: Codable {
     let choices: [Choice]
     
@@ -28,13 +26,16 @@ struct ImageAnalysisService {
             print("Failed to convert image to JPEG data")
             return
         }
-        
+        guard let api_key = Bundle.main.object(forInfoDictionaryKey: "API_KEY") as? String else {
+            print("Error: Missing API_KEY")
+            return
+        }
         let base64Image = imageData.base64EncodedString()
         let url = URL(string: "https://api.openai.com/v1/chat/completions")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue("Bearer \(API_KEY)", forHTTPHeaderField: "Authorization")
+        request.setValue("Bearer \(api_key)", forHTTPHeaderField: "Authorization")
         
         let requestBody: [String: Any] = [
             "model": "gpt-4o-mini",

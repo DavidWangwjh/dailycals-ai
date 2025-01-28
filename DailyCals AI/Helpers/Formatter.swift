@@ -30,3 +30,9 @@ func monthYearFormatter(from monthComponents: MonthComponents, calendar: Calenda
         return "Invalid Date"
     }
 }
+
+func dateFormatter(for date: Date) -> String {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "MM/dd/yyyy" // Customize this format as needed
+    return formatter.string(from: date)
+}

@@ -10,6 +10,7 @@ import SwiftUI
 struct AnalysisView: View {
     @Environment(ModelData.self) var modelData
     
+    var date: Date
     var image: UIImage
     @State private var isAnalyzing: Bool = false
     @State private var analysisResult: Food?
@@ -19,17 +20,31 @@ struct AnalysisView: View {
     var body: some View {
         ScrollView(showsIndicators: false) {
             HStack {
-                Button("Cancel"){
+                Button {
                     isAnalysisSheetShowing = false
+                } label: {
+                    Text("Cancel")
                 }
 
                 Spacer()
+                
+//                Text(date, format: .dateTime.day().month().year())
+//                    .font(.system(size: 24, weight: .bold))
+//                    .foregroundStyle(.gray)
+//                
+//                Spacer()
 
-                Button("Done"){
+                Button {
                     isAnalysisSheetShowing = false
+                } label: {
+                    Text("Done")
                 }
             }
             .padding()
+            
+            Text(date, format: .dateTime.weekday().day().month().year())
+                .font(.system(size: 24, weight: .bold))
+                .foregroundStyle(.gray)
             
             Image(uiImage: image)
                 .resizable()
@@ -59,11 +74,11 @@ struct AnalysisView: View {
 //                                print("Analysis error: \(error)")
 //                            }
 //                        }
-                        // testing
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
-                            isAnalyzing = false
-                            analysisResult = modelData.food
-                        }
+                    }
+                    // testing
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+                        isAnalyzing = false
+                        analysisResult = modelData.foods[0]
                     }
                 } label: {
                     if isAnalyzing {
@@ -87,6 +102,6 @@ struct AnalysisView: View {
 }
 
 #Preview {
-    AnalysisView(image: UIImage(named: "cheeseburger")!, isAnalysisSheetShowing: .constant(true))
+    AnalysisView(date: Date(), image: UIImage(named: "cheeseburger")!, isAnalysisSheetShowing: .constant(true))
         .environment(ModelData())
 }

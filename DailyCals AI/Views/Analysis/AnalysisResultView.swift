@@ -43,5 +43,5 @@ struct AnalysisResultView: View {
 }
 
 #Preview {
-    AnalysisResultView(result: ModelData().food)
+    AnalysisResultView(result: ModelData().foods[0])
 }

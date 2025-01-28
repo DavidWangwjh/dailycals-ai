@@ -32,7 +32,8 @@ func firstSundayOfMonth(for date: Date, using calendar: Calendar) -> Date? {
 struct CalendarView: View {
     @Environment(ModelData.self) var modelData
     
-    @State private var selectedDate = Date()
+    @Binding var selectedDate: Date
+    var foodCountByDate: [Date: Int]
     private let proxy = CalendarViewProxy()
     
     var body: some View {
@@ -49,17 +50,19 @@ struct CalendarView: View {
             MonthHeaderView(month: month)
         }
         .days { day in
-            let date = calendar.date(from: day.components) // Convert DayComponents to Date
-            DayView(
-                day: day,
-                isSelected: date != nil && calendar.isDate(date!, inSameDayAs: selectedDate),
-                isToday: date != nil && calendar.isDateInToday(date!)
-            )
-            .onTapGesture {
-                selectedDate = date! // Update the selected date on tap
+            if let date = calendar.date(from: day.components) { // Safely unwrap the date
+                DayView(
+                    day: day,
+                    isSelected: calendar.isDate(date, inSameDayAs: selectedDate),
+                    isToday: calendar.isDateInToday(date),
+                    foodCount: foodCountByDate[date] ?? 0
+                )
+                .onTapGesture {
+                    selectedDate = date // Update the selected date on tap
+                }
             }
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .frame(maxWidth: .infinity)
         .onAppear {
             if let firstSunday = firstSundayOfMonth(for: selectedDate, using: calendar) {
                 proxy.scrollToDay(containing: firstSunday, scrollPosition: .firstFullyVisiblePosition, animated: false)
@@ -83,14 +86,15 @@ struct DayView: View {
     let day: DayComponents
     let isSelected: Bool
     let isToday: Bool
+    let foodCount: Int
 
     var body: some View {
         
         VStack {
             Text("\(day.day)")
                 .font(.system(size: 20))
-            if day.day % 4 == 0 {
-                Text("2")
+            if foodCount != 0 {
+                Text("\(foodCount)")
                     .font(.system(size: 12))
             } else {
                 Text("")
@@ -104,7 +108,7 @@ struct DayView: View {
     }
 }
 
-#Preview {
-    CalendarView()
-        .environment(ModelData())
-}
+//#Preview {
+//    CalendarView(selectedDate: .constant(Date()))
+//        .environment(ModelData())
+//}

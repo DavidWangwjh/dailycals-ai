@@ -43,19 +43,22 @@ struct AnalysisView: View {
             .padding()
             
             Text(date, format: .dateTime.weekday().day().month().year())
-                .font(.system(size: 24, weight: .bold))
-                .foregroundStyle(.gray)
+                .font(.title2)
+                .fontWeight(.bold)
+            
+            Divider()
             
             Image(uiImage: image)
                 .resizable()
-                .scaledToFit()
-                .cornerRadius(20)
+                .scaledToFill()
+                .frame(width: 300, height: 300)
+                .cornerRadius(10) // Add rounded corners
+                .clipped()
                 .overlay(
                     RoundedRectangle(cornerRadius: 20)
                         .stroke(.white, lineWidth: 8)
                 )
                 .shadow(color: .gray, radius: 5)
-                .frame(maxWidth: 400, maxHeight: 300)
                 .padding()
             
             if analysisResult != nil {
@@ -65,15 +68,15 @@ struct AnalysisView: View {
                     isAnalyzing = true
                     
                     ImageAnalysisService.analyzeFood(image: image) { result in
-//                        DispatchQueue.main.async {
-//                            isAnalyzing = false
-//                            switch result {
-//                            case .success(let analysis):
-//                                analysisResult = analysis
-//                            case .failure(let error):
-//                                print("Analysis error: \(error)")
-//                            }
-//                        }
+                        //                        DispatchQueue.main.async {
+                        //                            isAnalyzing = false
+                        //                            switch result {
+                        //                            case .success(let analysis):
+                        //                                analysisResult = analysis
+                        //                            case .failure(let error):
+                        //                                print("Analysis error: \(error)")
+                        //                            }
+                        //                        }
                     }
                     // testing
                     DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
@@ -95,7 +98,6 @@ struct AnalysisView: View {
                 .buttonStyle(.borderedProminent)
                 .disabled(isAnalyzing)
             }
-            
             Spacer()
         }
     }

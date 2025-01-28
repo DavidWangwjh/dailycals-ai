@@ -10,18 +10,22 @@ import SwiftUI
 struct FoodListView: View {
     
     var foodItems: [Food]
+
+    @State var selectedFood: Food?
     
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false){
-            HStack(alignment: .top, spacing: 0) {
+            HStack(alignment: .top, spacing: -28) {
                 ForEach(foodItems) { foodItem in
-                    NavigationLink {
-                        FoodDetailView()
-                    } label: {
-                        FoodPreview(image: foodItem.image, title: foodItem.title, totalCals: foodItem.totalCalories)
-                    }
+                    FoodPreview(image: foodItem.image, title: foodItem.title, totalCals: foodItem.totalCalories)
+                        .onTapGesture {
+                            selectedFood = foodItem
+                        }
                 }
             }
+        }
+        .sheet(item: $selectedFood) { food in
+            FoodDetailView(food: food)
         }
     }
 }

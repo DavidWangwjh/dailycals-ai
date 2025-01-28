@@ -17,6 +17,9 @@ struct AnalysisResultView: View {
                 .font(.title)
                 .fontWeight(.bold)
             Text("\(result.imageDescription)")
+            
+            Divider()
+            
             Text("Ingredients")
                 .font(.title2)
             ForEach(result.ingredients, id: \.title) { ingredient in
@@ -25,18 +28,20 @@ struct AnalysisResultView: View {
                     
                     Spacer()
                     
-                    Text("\(numberFormatter(ingredient.totalCalories, decimal: 2)) calories")
+                    Text("\(numberFormatter(ingredient.totalCalories, decimal: 2)) cals")
                 }
             }
+            .padding(.horizontal)
             HStack {
                 Text("Total")
                     .fontWeight(.bold)
                 
                 Spacer()
                 
-                Text("\(numberFormatter(result.totalCalories, decimal: 2)) calories")
+                Text("\(numberFormatter(result.totalCalories, decimal: 2)) cals")
                     .fontWeight(.bold)
             }
+            .padding(.horizontal)
         }
         .padding()
     }

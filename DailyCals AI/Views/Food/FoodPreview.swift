@@ -40,7 +40,7 @@ struct FoodPreview: View {
         .frame(width: 100, height: 100) // Match the frame size of the image
         .background(Color.black.opacity(0.7)) // Optional: Add a slight background tint
         .cornerRadius(10) // Rounded corners for the entire ZStack
-        .padding(.horizontal, 6)
+        .padding(.horizontal, 20)
     }
 }
 

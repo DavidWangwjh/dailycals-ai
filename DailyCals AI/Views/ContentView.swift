@@ -7,6 +7,15 @@
 
 import SwiftUI
 
+extension AnyTransition {
+    static var moveAndFade: AnyTransition {
+        .asymmetric(
+            insertion: .move(edge: .trailing).combined(with: .opacity),
+            removal: .move(edge: .trailing).combined(with: .opacity)
+        )
+    }
+}
+
 struct ContentView: View {
     @Environment(ModelData.self) var modelData
     
@@ -27,21 +36,28 @@ struct ContentView: View {
     var body: some View {
         VStack {
             Text("DailyCals AI")
-                .font(.title)
+                .font(.largeTitle)
                 .fontWeight(.bold)
+                .padding(.top, 20)
             
             Spacer()
             
             CalendarView(selectedDate: $selectedDate, foodCountByDate: foodCountByDate)
-                .padding(.bottom, -40)
             
-            FoodListView(foodItems: foodByDate[selectedDate] ?? [])
+            if let items = foodByDate[selectedDate],
+               !items.isEmpty {
+                FoodListView(foodItems: items)
+                // Animate how the FoodListView enters/exits
+                    .offset(y: -55)
+                    .transition(.moveAndFade)
+            }
             
             Spacer()
 
             ImageSourceSelector(selectedImage: $selectedImage)
         }
-        .padding(.vertical)
+//        .background(LinearGradient(gradient: Gradient(colors: [.green, .white]), startPoint: .topLeading, endPoint: .bottomTrailing))
+        .animation(.easeInOut(duration: 0.7), value: selectedDate)
         .onChange(of: selectedImage) {
             isAnalysisSheetShowing = selectedImage != nil
         }

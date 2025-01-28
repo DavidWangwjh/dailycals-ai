@@ -34,8 +34,10 @@ struct ImageSourceSelector: View {
             .padding()
         }
         .fullScreenCover(isPresented: $isCameraPresented) {
-            ImagePicker(sourceType: .camera, selectedImage: $selectedImage)
-                .edgesIgnoringSafeArea(.all)
+            ZStack {
+                ImagePicker(sourceType: .camera, selectedImage: $selectedImage)
+                    .edgesIgnoringSafeArea(.all)
+            }
         }
         .fullScreenCover(isPresented: $isPhotoLibraryPresented) {
             ImagePicker(sourceType: .photoLibrary, selectedImage: $selectedImage)

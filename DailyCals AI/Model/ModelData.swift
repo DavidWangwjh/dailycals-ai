@@ -122,6 +122,15 @@ class ModelData {
                 ingredients: [
                     Ingredient(title: "Pancakes", caloriesPerGram: 2.5, totalGram: 200, totalCalories: 500),
                     Ingredient(title: "Maple Syrup", caloriesPerGram: 3.0, totalGram: 50, totalCalories: 150),
+                    Ingredient(title: "Butter", caloriesPerGram: 7.2, totalGram: 30, totalCalories: 216),
+                    Ingredient(title: "Pancakes", caloriesPerGram: 2.5, totalGram: 200, totalCalories: 500),
+                    Ingredient(title: "Maple Syrup", caloriesPerGram: 3.0, totalGram: 50, totalCalories: 150),
+                    Ingredient(title: "Butter", caloriesPerGram: 7.2, totalGram: 30, totalCalories: 216),
+                    Ingredient(title: "Pancakes", caloriesPerGram: 2.5, totalGram: 200, totalCalories: 500),
+                    Ingredient(title: "Maple Syrup", caloriesPerGram: 3.0, totalGram: 50, totalCalories: 150),
+                    Ingredient(title: "Butter", caloriesPerGram: 7.2, totalGram: 30, totalCalories: 216),
+                    Ingredient(title: "Pancakes", caloriesPerGram: 2.5, totalGram: 200, totalCalories: 500),
+                    Ingredient(title: "Maple Syrup", caloriesPerGram: 3.0, totalGram: 50, totalCalories: 150),
                     Ingredient(title: "Butter", caloriesPerGram: 7.2, totalGram: 30, totalCalories: 216)
                 ],
                 totalCalories: 866,

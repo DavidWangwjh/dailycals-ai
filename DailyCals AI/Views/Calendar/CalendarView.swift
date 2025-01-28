@@ -37,35 +37,40 @@ struct CalendarView: View {
     private let proxy = CalendarViewProxy()
     
     var body: some View {
-        CalendarViewRepresentable(
-          calendar: calendar,
-          visibleDateRange: startDate...endDate,
-          monthsLayout: .horizontal,
-          dataDependency: nil,
-          proxy: proxy
-        )
-        .interMonthSpacing(10)
-        .verticalDayMargin(10)
-        .monthHeaders { month in
-            MonthHeaderView(month: month)
-        }
-        .days { day in
-            if let date = calendar.date(from: day.components) { // Safely unwrap the date
-                DayView(
-                    day: day,
-                    isSelected: calendar.isDate(date, inSameDayAs: selectedDate),
-                    isToday: calendar.isDateInToday(date),
-                    foodCount: foodCountByDate[date] ?? 0
-                )
-                .onTapGesture {
-                    selectedDate = date // Update the selected date on tap
+        VStack{
+            
+            CalendarViewRepresentable(
+                calendar: calendar,
+                visibleDateRange: startDate...endDate,
+                monthsLayout: .horizontal,
+                dataDependency: nil,
+                proxy: proxy
+            )
+            .backgroundColor(UIColor(Color.white.opacity(0)))
+            .interMonthSpacing(10)
+            .horizontalDayMargin(4)
+            .verticalDayMargin(10)
+            .monthHeaders { month in
+                MonthHeaderView(month: month)
+            }
+            .days { day in
+                if let date = calendar.date(from: day.components) { // Safely unwrap the date
+                    DayView(
+                        day: day,
+                        isSelected: calendar.isDate(date, inSameDayAs: selectedDate),
+                        isToday: calendar.isDateInToday(date),
+                        foodCount: foodCountByDate[date] ?? 0
+                    )
+                    .onTapGesture {
+                        selectedDate = date // Update the selected date on tap
+                    }
                 }
             }
-        }
-        .frame(maxWidth: .infinity)
-        .onAppear {
-            if let firstSunday = firstSundayOfMonth(for: selectedDate, using: calendar) {
-                proxy.scrollToDay(containing: firstSunday, scrollPosition: .firstFullyVisiblePosition, animated: false)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .onAppear {
+                if let firstSunday = firstSundayOfMonth(for: selectedDate, using: calendar) {
+                    proxy.scrollToDay(containing: firstSunday, scrollPosition: .firstFullyVisiblePosition, animated: false)
+                }
             }
         }
     }
@@ -89,20 +94,26 @@ struct DayView: View {
     let foodCount: Int
 
     var body: some View {
-        
-        VStack {
+        ZStack(alignment: .topTrailing) {
+            // Centered day text
             Text("\(day.day)")
                 .font(.system(size: 20))
+                .fontWeight(isSelected ? .bold : .regular)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+            
+            // Top-right badge
             if foodCount != 0 {
                 Text("\(foodCount)")
                     .font(.system(size: 12))
-            } else {
-                Text("")
-                    .font(.system(size: 12))
+                    .frame(width: 20, height: 20)
+                    .background(Color.green)
+                    .cornerRadius(.infinity)
+                    .foregroundColor(.white)
             }
         }
-        .frame(width: 50, height: 50)
-        .background(isSelected ? Color.blue : (isToday ? Color.gray : Color.clear))
+        .frame(width: 52, height: 52)
+        .background(isSelected ? Color.blue
+                    : (isToday ? Color.gray : Color.clear))
         .foregroundColor(isSelected || isToday ? .white : .black)
         .cornerRadius(10)
     }

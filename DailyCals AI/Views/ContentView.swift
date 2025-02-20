@@ -33,6 +33,10 @@ struct ContentView: View {
         Calendar.current.startOfDay(for: food.createdAt)
     }.mapValues { $0.count }
     
+    @State private var isShowingDialog = false
+    @State private var isCameraPresented = false
+    @State private var isPhotoLibraryPresented = false
+    
     var body: some View {
         VStack {
             Text("DailyCals AI")
@@ -53,16 +57,66 @@ struct ContentView: View {
             }
             
             Spacer()
+            
+            Button(action: {
+                isShowingDialog = true
+            }) {
+                VStack {
+                    ZStack {
+                        Circle()
+                            .fill(.white)
+                            .frame(width: 40, height: 40)
+                            .overlay(
+                                Circle().stroke(.blue, lineWidth: 2)
+                            )
+                        Image(systemName: "plus")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 20, height: 20)
+                    }
+                    Text("Add")
+                        .font(.headline)
+                }
+            }
+            .confirmationDialog(
+                "Select Photo Source",
+                isPresented: $isShowingDialog,
+                titleVisibility: .visible
+            ) {
+                Button {
+                    isCameraPresented = true
+                } label: {
+                    Label("Take Photo", systemImage: "camera")
+                }
+                
+                Button {
+                    isPhotoLibraryPresented = true
+                } label: {
+                    Label("Choose from Library", systemImage: "photo")
+                }
+                
+                Button("Cancel", role: .cancel) {
+                    isShowingDialog = false
+                }
+            }
 
-            ImageSourceSelector(selectedImage: $selectedImage)
         }
-//        .background(LinearGradient(gradient: Gradient(colors: [.green, .white]), startPoint: .topLeading, endPoint: .bottomTrailing))
         .animation(.easeInOut(duration: 0.7), value: selectedDate)
         .onChange(of: selectedImage) {
             isAnalysisSheetShowing = selectedImage != nil
+            isCameraPresented = false
+            isPhotoLibraryPresented = false
         }
         .fullScreenCover(isPresented: .constant(isAnalysisSheetShowing)) {
             AnalysisView(date: selectedDate, image: selectedImage!, isAnalysisSheetShowing: $isAnalysisSheetShowing)
+        }
+        .fullScreenCover(isPresented: $isCameraPresented) {
+            ImagePicker(sourceType: .camera, selectedImage: $selectedImage)
+                    .edgesIgnoringSafeArea(.all)
+        }
+        .fullScreenCover(isPresented: $isPhotoLibraryPresented) {
+            ImagePicker(sourceType: .photoLibrary, selectedImage: $selectedImage)
+                .edgesIgnoringSafeArea(.all)
         }
     }
 }

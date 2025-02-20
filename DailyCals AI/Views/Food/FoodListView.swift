@@ -15,7 +15,7 @@ struct FoodListView: View {
     
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false){
-            HStack(alignment: .top, spacing: -28) {
+            HStack(alignment: .top, spacing: 10) {
                 ForEach(foodItems) { foodItem in
                     FoodPreview(image: foodItem.image, title: foodItem.title, totalCals: foodItem.totalCalories)
                         .onTapGesture {
@@ -23,6 +23,7 @@ struct FoodListView: View {
                         }
                 }
             }
+            .padding(.horizontal)
         }
         .sheet(item: $selectedFood) { food in
             FoodDetailView(food: food)

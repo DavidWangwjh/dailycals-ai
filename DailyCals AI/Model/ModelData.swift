@@ -25,7 +25,7 @@ class ModelData {
                 ],
                 totalCalories: 495,
                 imageName: "cheeseburger",
-                createdAt: calendar.date(from: DateComponents(year: 2025, month: 1, day: 1))!
+                createdAt: calendar.date(from: DateComponents(year: 2025, month: 2, day: 17))!
             ),
             Food(
                 id: 2,
@@ -38,7 +38,7 @@ class ModelData {
                 ],
                 totalCalories: 880,
                 imageName: "veggie_pizza",
-                createdAt: calendar.date(from: DateComponents(year: 2025, month: 1, day: 1))!
+                createdAt: calendar.date(from: DateComponents(year: 2025, month: 2, day: 17))!
             ),
             Food(
                 id: 3,
@@ -51,7 +51,7 @@ class ModelData {
                 ],
                 totalCalories: 350,
                 imageName: "chicken_salad",
-                createdAt: calendar.date(from: DateComponents(year: 2025, month: 1, day: 5))!
+                createdAt: calendar.date(from: DateComponents(year: 2025, month: 2, day: 17))!
             ),
             Food(
                 id: 4,
@@ -64,7 +64,7 @@ class ModelData {
                 ],
                 totalCalories: 875,
                 imageName: "pasta_bolognese",
-                createdAt: calendar.date(from: DateComponents(year: 2025, month: 1, day: 6))!
+                createdAt: calendar.date(from: DateComponents(year: 2025, month: 2, day: 17))!
             ),
             Food(
                 id: 5,

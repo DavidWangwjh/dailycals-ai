@@ -408,8 +408,8 @@
 				DEVELOPMENT_TEAM = 2BYBU8S8TW;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSCameraUsageDescription = "$(PRODUCT_NAME) requires camera access to allow you to take photos.";
-				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "$(PRODUCT_NAME) requires photo library access to allow you to choose photos.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires camera access to allow you to take photos.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "This app requires photo library access to allow you to choose photos.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -440,8 +440,8 @@
 				DEVELOPMENT_TEAM = 2BYBU8S8TW;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSCameraUsageDescription = "$(PRODUCT_NAME) requires camera access to allow you to take photos.";
-				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "$(PRODUCT_NAME) requires photo library access to allow you to choose photos.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires camera access to allow you to take photos.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "This app requires photo library access to allow you to choose photos.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AVFoundation
 
 extension AnyTransition {
     static var moveAndFade: AnyTransition {
@@ -24,18 +25,17 @@ struct ContentView: View {
     @State var isAnalysisSheetShowing: Bool = false
     
     let foodByDate: [Date: [Food]] = Dictionary(grouping: ModelData().foods) { food in
-        // Use only the date components for grouping
         Calendar.current.startOfDay(for: food.createdAt)
     }
     
     let foodCountByDate: [Date: Int] = Dictionary(grouping: ModelData().foods) { food in
-        // Group foods by the start of the day
         Calendar.current.startOfDay(for: food.createdAt)
     }.mapValues { $0.count }
     
     @State private var isShowingDialog = false
     @State private var isCameraPresented = false
     @State private var isPhotoLibraryPresented = false
+    @State private var showCameraDeniedAlert = false
     
     var body: some View {
         VStack {
@@ -51,7 +51,6 @@ struct ContentView: View {
             if let items = foodByDate[selectedDate],
                !items.isEmpty {
                 FoodListView(foodItems: items)
-                // Animate how the FoodListView enters/exits
                     .offset(y: -55)
                     .transition(.moveAndFade)
             }
@@ -84,7 +83,17 @@ struct ContentView: View {
                 titleVisibility: .visible
             ) {
                 Button {
-                    isCameraPresented = true
+                    // Request camera access before presenting the camera.
+                    AVCaptureDevice.requestAccess(for: .video) { granted in
+                        DispatchQueue.main.async {
+                            if granted {
+                                isCameraPresented = true
+                            } else {
+                                // Trigger an alert if access is denied.
+                                showCameraDeniedAlert = true
+                            }
+                        }
+                    }
                 } label: {
                     Label("Take Photo", systemImage: "camera")
                 }
@@ -99,7 +108,6 @@ struct ContentView: View {
                     isShowingDialog = false
                 }
             }
-
         }
         .animation(.easeInOut(duration: 0.7), value: selectedDate)
         .onChange(of: selectedImage) {
@@ -112,11 +120,19 @@ struct ContentView: View {
         }
         .fullScreenCover(isPresented: $isCameraPresented) {
             ImagePicker(sourceType: .camera, selectedImage: $selectedImage)
-                    .edgesIgnoringSafeArea(.all)
+                .edgesIgnoringSafeArea(.all)
         }
         .fullScreenCover(isPresented: $isPhotoLibraryPresented) {
             ImagePicker(sourceType: .photoLibrary, selectedImage: $selectedImage)
                 .edgesIgnoringSafeArea(.all)
+        }
+        // Alert for camera access denied.
+        .alert(isPresented: $showCameraDeniedAlert) {
+            Alert(
+                title: Text("Camera Access Denied"),
+                message: Text("Please enable camera access in Settings to take photos."),
+                dismissButton: .default(Text("OK"))
+            )
         }
     }
 }

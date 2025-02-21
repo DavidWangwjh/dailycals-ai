@@ -51,7 +51,7 @@ class ModelData {
                 ],
                 totalCalories: 350,
                 imageName: "chicken_salad",
-                createdAt: calendar.date(from: DateComponents(year: 2025, month: 2, day: 17))!
+                createdAt: calendar.date(from: DateComponents(year: 2025, month: 2, day: 20))!
             ),
             Food(
                 id: 4,

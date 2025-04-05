@@ -49,7 +49,7 @@ struct FoodDetailView: View {
                         
                         Spacer()
                         
-                        Text("\(numberFormatter(ingredient.totalCalories, decimal: 2)) cals")
+                        Text("\(Int(ingredient.totalCalories)) cals")
                     }
                 }
                 .padding(.horizontal)
@@ -59,7 +59,7 @@ struct FoodDetailView: View {
                     
                     Spacer()
                     
-                    Text("\(numberFormatter(food.totalCalories, decimal: 2)) cals")
+                    Text("\(Int(food.totalCalories)) cals")
                         .fontWeight(.bold)
                 }
                 .padding(.horizontal)

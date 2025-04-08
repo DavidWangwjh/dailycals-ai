@@ -5,4 +5,4 @@ DailyCals AI is a native iOS app that uses AI to analyze food images and provide
 ![Home page](./Assets/app-home.png)
 
 ## Food Analysis Page
-![Food analysis page](./Assets/app-home.png)
+![Food analysis page](./Assets/app-detail.png)
